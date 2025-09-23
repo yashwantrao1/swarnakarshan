@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swarnakarshan Labs - Loading</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .logo-circle {
+            width: 30px;
+            height: 30px;
+            background-color: #000;
+            border-radius: 50%;
+            transform: scale(0);
+        }
+
+        .company-text {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .text-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .loading-progress {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 2px;
+            background-color: rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.7));
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            opacity: 0;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="logo">
+            <div class="logo-circle"></div>
+        </div>
+        <div class="company-text">SWARNAKARSHAN LABS PVT LTD</div>
+    </div>
+
+    <div class="loading-progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="loading-text">Loading...</div>
+
+    <script>
+        // Split text into individual characters for animation
+        const companyText = document.querySelector('.company-text');
+        const textContent = companyText.textContent;
+        companyText.innerHTML = '';
+
+        // Create spans for each character
+        for (let i = 0; i < textContent.length; i++) {
+            const char = textContent[i] === ' ' ? '&nbsp;' : textContent[i];
+            const span = document.createElement('span');
+            span.innerHTML = char;
+            span.classList.add('text-char');
+            companyText.appendChild(span);
+        }
+
+        // GSAP Timeline
+        const tl = gsap.timeline();
+
+        // Initial setup
+        gsap.set(['.logo', '.logo-circle', '.text-char', '.loading-text'], {
+            opacity: 0
+        });
+
+        gsap.set('.logo', {
+            scale: 0,
+            rotation: -180
+        });
+
+        gsap.set('.logo-circle', {
+            scale: 0
+        });
+
+        gsap.set('.text-char', {
+            y: 50,
+            rotationX: -90
+        });
+
+        gsap.set('.progress-bar', {
+            width: '0%'
+        });
+
+        // Animation sequence
+        tl
+        // Logo appears with rotation and scale
+        .to('.logo', {
+            duration: 0.8,
+            opacity: 1,
+            scale: 1,
+            rotation: 0,
+            ease: "back.out(1.7)"
+        })
+        
+        // Logo circle appears
+        .to('.logo-circle', {
+            duration: 0.6,
+            opacity: 1,
+            scale: 1,
+            ease: "elastic.out(1, 0.5)"
+        }, "-=0.3")
+        
+        // Text characters appear one by one
+        .to('.text-char', {
+            duration: 0.05,
+            opacity: 1,
+            y: 0,
+            rotationX: 0,
+            stagger: 0.03,
+            ease: "power2.out"
+        }, "-=0.2")
+        
+        // Progress bar animation
+        .to('.progress-bar', {
+            duration: 2,
+            width: '100%',
+            ease: "power2.inOut"
+        }, "-=0.5")
+        
+        // Loading text appears
+        .to('.loading-text', {
+            duration: 0.5,
+            opacity: 1,
+            ease: "power2.out"
+        }, "-=1.5")
+        
+        // Pulse animation for the logo
+        .to('.logo-circle', {
+            duration: 1,
+            scale: 1.2,
+            yoyo: true,
+            repeat: -1,
+            ease: "power2.inOut"
+        }, "-=1")
+        
+        // Text glow effect
+        .to('.company-text', {
+            duration: 2,
+            textShadow: "0 0 10px rgba(255,255,255,0.5)",
+            yoyo: true,
+            repeat: -1,
+            ease: "power2.inOut"
+        }, "-=1");
+
+        // Optional: Simulate loading completion
+        setTimeout(() => {
+            gsap.to(['.loading-container', '.loading-progress', '.loading-text'], {
+                duration: 0.8,
+                opacity: 0,
+                y: -50,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    console.log('Loading complete!');
+                    // You can redirect or show main content here
+                }
+            });
+        }, 6000); // Adjust timing as needed
+    </script>
+</body>
+</html>
