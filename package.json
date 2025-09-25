@@ -8,10 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/three": "^0.180.0",
     "framer-motion": "^12.23.16",
+    "gsap": "^3.13.0",
     "next": "15.5.3",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
