@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, useAnimation } from "framer-motion";
 import SubtleWaterGrid from "@/components/bg";
+import VercelLikeBackground from "@/components/bg_sec";
 
 /**
  * Coming Soon / Logo Reveal (Centered Pair Step)
@@ -77,10 +78,10 @@ export default function ComingSoonReveal() {
 
   return (
     <div
-      className="min-h-screen w-full bg-black text-white flex items-center justify-center overflow-hidden p-5 "
+      className="min-h-screen w-full text-white flex items-center justify-center overflow-hidden p-5 "
       // onMouseMove={handleMouseMove}
     >
-      <SubtleWaterGrid/>
+      <VercelLikeBackground />
       {/* Cursor-following light (fixed so it sits under cursor regardless of layout/scroll) */}
       <div
         ref={lightRef}
@@ -208,8 +209,8 @@ function LogoMark() {
       role="img"
       aria-label="Swarnakarshan Labs logo"
     >
-      <rect x="0" y="0" width="100" height="100" fill="white" />
-      <circle cx="50" cy="50" r="25" fill="#000000" />
+      <rect x="0" y="0" width="100" height="100" fill="#000000" />
+      <circle cx="50" cy="50" r="25" fill="#ffffff" />
     </svg>
   );
 }
